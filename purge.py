@@ -10,21 +10,6 @@ def rfc822(timestamp):
     return datetime.datetime.fromtimestamp(email.utils.mktime_tz(email.utils.parsedate_tz(timestamp)))
 
 
-def iter_statuses(api):
-    max_id = None
-    total_statuses = 0
-    while True:
-        statuses = api.GetUserTimeline(count=500, max_id=max_id)
-        time.sleep(1)
-        print("Requesting statuses with max_id {0}".format(max_id))
-        if len(statuses) == 0:
-            break
-        for status in statuses:
-            yield (total_statuses, status)
-            total_statuses += 1
-            max_id = status.id
-
-
 def batch(iterable, size):
     sourceiter = iter(iterable)
     while True:
